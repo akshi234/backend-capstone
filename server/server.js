@@ -3,16 +3,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 dotenv.config();
-const authRouter = require("./routes/auth");
-const authenticate = require("./middleware/authentication");
+const authRoutes = require("./routes/auth");
+const jobRoutes = require("./routes/job");
+const authorization = require("./middleware/authorization");
 
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/auth", authRouter);
-app.get("/page", authenticate, (req, res) => {
+app.use("api/auth", authRoutes);
+app.use("api/job", jobRoutes);
+app.get("/page", authorization, (req, res) => {
   res.json({
     status: "active",
     message: "running",
