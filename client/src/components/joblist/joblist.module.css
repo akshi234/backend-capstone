@@ -1,0 +1,89 @@
+.jobleftright{
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 0px 15px rgba(220, 154, 154, 0.855); 
+    color: black;
+    height: 7.5rem;
+    width: 59.7rem;
+    background: white;
+    position: absolute;
+    left: 18rem;
+    top: 21rem;
+}
+
+.jobleft{
+    
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+
+.jobInfo{
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+.info{
+    display: flex;
+    gap: 15px;
+}
+.moneyImg{
+    width: .8rem;
+    height: 1rem;
+    margin-top: .3rem;
+}
+.countryImg{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.groupImg{
+    width: 1.3rem;
+    height: 1rem;
+    margin-top: .2rem;
+}
+.color{
+    color: #c3c3c3;
+}
+
+.jobtype{
+    display: flex;
+    gap: 20px;
+    color: #ed5353;
+    margin-top: .2rem;
+}
+
+.jobright{
+    display: flex;
+    flex-direction: column;
+    color: black;
+    margin-top: 1.5rem;
+    margin-right: 2rem;
+}
+
+.jobskills{
+    display: flex;
+    gap: 20px;
+}
+
+.skill{
+    background-color: #fee;
+    width: 6rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.viewdetails{
+    background: #ED5353;
+    color: #FFF;
+    width: 7.5rem;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: .2rem;
+    margin: 20px;
+    margin-left: 13rem;
+}

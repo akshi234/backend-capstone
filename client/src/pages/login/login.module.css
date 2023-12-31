@@ -1,0 +1,83 @@
+
+
+.leftRight{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.left{
+    background-color: white;
+    width: 55rem;
+}
+.img{
+    height: 53rem;
+    width: 44rem;
+    position: relative;
+    bottom: 10rem;
+}
+
+.lines{
+    color: black;
+    margin-left: 8rem;
+    margin-top: 9rem;
+    z-index: 1;
+}
+.lines h1{
+    height: 3.8rem;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.reginput{
+    width: 28rem;
+    height: 1.3rem;
+    margin-left: 8rem;
+    background: transparent;
+    border-color: #C2C2C2;
+    border-radius: .3rem;
+    font-size: 18px;
+    padding: 12px;
+    position: relative;
+    top: 1rem;
+    color: black;
+}
+
+.regbtn {
+    background-color: #ED5353;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 11rem;
+    margin-left: 8rem;
+    position: relative;
+    top: 1rem;
+  }
+  
+  .regbtn:hover {
+    background-color: #ED5367;
+  }
+
+  .acc{
+    color: black;
+    margin-left: 8rem;
+    margin-top: 1rem;
+
+  } 
+  .sign:hover{
+    border-bottom: 2px solid black;
+  }
+.finder{
+    position: relative;
+    top: 1rem;
+    left: 9rem;
+    z-index: 1;
+    font-size: 40px;
+
+}
+  

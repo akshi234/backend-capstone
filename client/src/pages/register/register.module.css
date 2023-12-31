@@ -1,0 +1,94 @@
+.leftRight{
+    display: flex;
+    flex-direction: row;
+}
+
+.left{
+    background-color: white;
+    width: 55rem;
+}
+.img{
+    height: 53rem;
+    width: 44rem;
+    position: relative;
+    bottom: 10rem;
+}
+
+.lines{
+    color: black;
+    margin-left: 8rem;
+    margin-top: 4rem;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.reginput{
+    width: 28rem;
+    height: 1.3rem;
+    margin-left: 8rem;
+    margin-top: 1rem;
+    background: transparent;
+    border-color: #C2C2C2;
+    border-radius: .3rem;
+    font-size: 18px;
+    padding: 12px;
+    color: black;
+}
+.checkboxx{
+    width: 14px;
+    height: 1rem;
+    background: transparent;
+    position: relative;
+    right: .5rem;
+    top: .1rem;
+    color: black;
+    z-index: 1;
+    margin-bottom: 1rem;
+}
+.txt{
+    color: black;
+    position: relative;
+    top: .1rem;
+    left: 5px;
+    font-size: 14px;
+    z-index: 1;
+}
+
+  .regbtn {
+    background-color: #ED5353;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 11rem;
+    margin-left: 8rem;
+    position: relative;
+    bottom: rem;
+  }
+  
+  .regbtn:hover {
+    background-color: #ED5367;
+  }
+
+  .acc{
+    color: black;
+    margin-left: 8rem;
+    position: relative;
+    bottom: 2rem;
+  } 
+  .sign:hover{
+    border-bottom: 2px solid black;
+  }
+.finder{
+    position: relative;
+    top: 1rem;
+    left: 9rem;
+    z-index: 1;
+    font-size: 40px;
+
+}
+  
