@@ -29,27 +29,28 @@ router.post("/signup", async (req, res) => {
       mobile,
       password: encryptedPassword,
     });
-    await user.save();
+    // await user.save();
     res.json({
       status: "SUCCESS",
       data: "you have signed up successfully",
     });
   } catch (error) {
-    errorHandler(res, error);
-    // res.json({
-    //   status: "FAILED",
-    //   message: error.message,
-    // });
+    // errorHandler(res, error);
+    res.json({
+      status: "FAILED",
+      message: error.message,
+    });
   }
 });
 
 //Login
 router.post("/login", async (req, res) => {
   try {
+    console.log(req.body);
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(404).json({ error: "Email and Password are required" });
+      return res.status(404).json({ error: "Email and password required" });
     }
     const user = await User.findOne({ email });
     if (!user) {
@@ -58,13 +59,13 @@ router.post("/login", async (req, res) => {
 
     const PasswordMatched = await bcrypt.compare(password, user.password);
     if (PasswordMatched) {
-      const jwtToken = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
-        expiresIn: "2h",
+      const jwttoken = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
+        expiresIn: "24h",
       });
       res.json({
         status: "SUCCESS",
         message: "you have logged in successfully",
-        jwtToken,
+        jwttoken,
       });
     } else {
       res.json({
@@ -73,11 +74,12 @@ router.post("/login", async (req, res) => {
       });
     }
   } catch (error) {
-    errorHandler(res, error);
-    // res.json({
-    //   status: "FAILED",
-    //   message: "Incorrect email and password. Please try again",
-    // });
+    console.log(error.message);
+    // errorHandler(res, error);
+    res.json({
+      status: "FAILED",
+      message: "An error occured. Please try again later",
+    });
   }
 });
 

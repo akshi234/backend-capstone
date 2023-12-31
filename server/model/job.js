@@ -5,19 +5,19 @@ const jobPostSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  remote: {
+  workType: {
     type: String,
-    enum: [Remote, office],
+    enum: ["remote", "office"],
     required: true,
   },
-  skillsRequired: {
-    type: String,
-    required: true,
-  },
-  recuiterName: {
+  skills: {
     type: String,
     required: true,
   },
+  // recuiterName: {
+  //   type: String,
+  //   required: true,
+  // },
   cretedAt: {
     type: Date,
     default: Date.new,
@@ -55,4 +55,4 @@ const jobPostSchema = new mongoose.Schema({
   },
 });
 
-modulr.exports = mongoose.model("JobPost", jobPostSchema);
+module.exports = mongoose.model("JobPost", jobPostSchema);
