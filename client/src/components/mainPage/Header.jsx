@@ -1,14 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./header.module.css";
 import top from "../../assets/top.png";
 import bottom from "../../assets/bottom.png";
 import middle from "../../assets/middle.png";
 import user from "../../assets/user.png";
-import JobSearch from "../jobSearch/JobSearch";
-import JobList from "../joblist/JobList";
 import { isUserLoggedIn } from "../utils/util";
+import { useNavigate } from "react-router-dom";
+// import * as jwt_decode from "jwt-decode";
+
 export default function Header() {
-  const [isLoggedIn] = useState(isUserLoggedIn());
+  const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn());
+  const navigate = useNavigate();
+  const [userName] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // try {
+      //   const decodedToken = jwt_decode(token);
+      //   console.log("Decoded Token Payload:", decodedToken);
+      //   setUserName(decodedToken.fullname);
+      // } catch (error) {
+      //   console.error("Error decoding token:", error);
+      // }
+    }
+  }, [isLoggedIn]);
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
+  const handleSignUpClick = () => {
+    navigate("/register");
+  };
+
+  const handleLogoutClick = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+  };
 
   return (
     <>
@@ -22,21 +51,22 @@ export default function Header() {
           <div className={styles.jobFinder}>Jobfinder</div>
           {isLoggedIn ? (
             <div className={styles.userProfile}>
-              <div>Logout</div>
-              <div>hello! Recruiter</div>
+              <div onClick={handleLogoutClick}>Logout</div>
+              <div>hello! {userName}</div>
               <img src={user} className={styles.userImg} />
             </div>
           ) : (
             <div className={styles.logReg}>
-              <div className={styles.login}>Login</div>
-              <div className={styles.register}>Register</div>
+              <div className={styles.login} onClick={handleLoginClick}>
+                Login
+              </div>
+              <div className={styles.register} onClick={handleSignUpClick}>
+                Register
+              </div>
             </div>
           )}
         </div>
       </div>
-      <JobSearch />
-      <br />
-      <JobList />
     </>
   );
 }

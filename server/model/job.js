@@ -11,7 +11,7 @@ const jobPostSchema = new mongoose.Schema({
     required: true,
   },
   skills: {
-    type: String,
+    type: [String],
     required: true,
   },
   // recuiterName: {
@@ -37,7 +37,6 @@ const jobPostSchema = new mongoose.Schema({
   },
   jobType: {
     type: String,
-    enum: ["Full-time", "Part-time", "Intern"],
     required: true,
   },
   location: {

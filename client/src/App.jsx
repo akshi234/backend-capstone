@@ -3,8 +3,8 @@ import "react-toastify/dist/ReactToastify.css";
 import Register from "./pages/register/Register";
 import Login from "./pages/login/Login";
 import JobPage from "./pages/jobPage/JobPage";
-import Alljob from "./pages/allJob/Alljob";
 import Jobdes from "./components/jobdes/Jobdes";
+import Alljob from "./pages/AllJob/AllJob";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {

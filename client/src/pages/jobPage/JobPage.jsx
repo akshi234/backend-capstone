@@ -1,14 +1,67 @@
-// import React from "react";
 import styles from "./jobPage.module.css";
 import color from "../../assets/color.png";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useState } from "react";
+import axios from "axios";
 
 export default function JobPage() {
+  const [companyName, setCompanyName] = useState("");
+  const [logoURL, setLogoURL] = useState("");
+  const [position, setPosition] = useState("");
+  const [salary, setSalary] = useState("");
+  const [jobType, setJobType] = useState("");
+  const [workType, setWorkType] = useState("");
+  const [location, setLocation] = useState("");
+  const [description, setdescription] = useState("");
+  const [about, setAbout] = useState("");
+  const [skills, setSkills] = useState("");
+
+  const AddJob = async (e) => {
+    e.preventDefault();
+
+    try {
+      const token = localStorage.getItem("token");
+      console.log("Token from localStorage:", token);
+
+      const response = await axios.post(
+        "http://localhost:3001/JobPosts",
+        {
+          companyName,
+          logoURL,
+          position,
+          salary,
+          jobType,
+          workType,
+          location,
+          description,
+          about,
+          skills,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+        }
+      );
+
+      if (response) {
+        localStorage.setItem("token", response.data.token);
+        toast.success("Job added succesfully");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  };
+
   return (
     <div className={styles.leftRight}>
       <div className={styles.left}>
         <p className={styles.lines}>Add job description</p>
 
-        <form className={styles.forms}>
+        <form className={styles.forms} onSubmit={AddJob}>
           <div>
             <label htmlFor="companyName">Company Name</label>
             <input
@@ -16,6 +69,8 @@ export default function JobPage() {
               name="companyName"
               placeholder="Company Name"
               className={styles.compName}
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
             />
           </div>
           <div>
@@ -25,6 +80,8 @@ export default function JobPage() {
               name="logoUrl"
               placeholder="Logo URL"
               className={styles.logo}
+              value={logoURL}
+              onChange={(e) => setLogoURL(e.target.value)}
             />
           </div>
 
@@ -35,6 +92,8 @@ export default function JobPage() {
               name="jobPosition"
               placeholder="Job Position"
               className={styles.jobpos}
+              value={position}
+              onChange={(e) => setPosition(e.target.value)}
             />
           </div>
           <div>
@@ -44,11 +103,19 @@ export default function JobPage() {
               name="monthlySalary"
               placeholder="Monthly Salary"
               className={styles.monthsal}
+              value={salary}
+              onChange={(e) => setSalary(e.target.value)}
             />
           </div>
           <div>
             <label htmlFor="jobType">Job Type</label>
-            <select name="jobType" className={styles.jobtype}>
+            <select
+              name="jobType"
+              className={styles.jobtype}
+              value={jobType}
+              onChange={(e) => setJobType(e.target.value)}
+            >
+              <option value="Job Type">Job Type</option>
               <option value="fullTime">Full Time</option>
               <option value="partTime">Part Time</option>
               <option value="contract">Contract</option>
@@ -57,9 +124,15 @@ export default function JobPage() {
 
           <div>
             <label htmlFor="workLocation">Remote/Office</label>
-            <select name="workLocation" className={styles.workLocation}>
+            <select
+              name="workLocation"
+              className={styles.workLocation}
+              value={workType}
+              onChange={(e) => setWorkType(e.target.value)}
+            >
+              <option value="Work Type">Work Type</option>
               <option value="remote">Remote</option>
-              <option value="office">Select</option>
+              <option value="office">Office</option>
             </select>
           </div>
 
@@ -70,6 +143,8 @@ export default function JobPage() {
               name="location"
               placeholder=" Enter location"
               className={styles.loc}
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
             />
           </div>
           <div>
@@ -80,6 +155,8 @@ export default function JobPage() {
               className={styles.jobdes}
               name="jobDescription"
               placeholder=" Type the job description"
+              value={description}
+              onChange={(e) => setdescription(e.target.value)}
             ></textarea>
           </div>
 
@@ -91,6 +168,8 @@ export default function JobPage() {
               name="aboutCompany"
               placeholder=" Type about your company"
               className={styles.aboutcomp}
+              value={about}
+              onChange={(e) => setAbout(e.target.value)}
             ></textarea>
           </div>
 
@@ -101,18 +180,11 @@ export default function JobPage() {
               name="skillsRequired"
               placeholder="Enter the must have skills"
               className={styles.skills}
+              value={skills}
+              onChange={(e) => setSkills(e.target.value)}
             />
           </div>
 
-          <div>
-            <label htmlFor="additionalInformation">Information</label>
-            <input
-              type="text"
-              name="skillsRequired"
-              placeholder="Enter the additional information"
-              className={styles.information}
-            />
-          </div>
           <div className={styles.btns}>
             <button className={styles.canbtn}>Cancel</button>
             <button className={styles.addbtn}>+Add Job</button>

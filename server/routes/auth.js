@@ -22,6 +22,7 @@ router.post("/signup", async (req, res) => {
     if (existingUser) {
       return res.status(404).json({ error: "Email is already registered" });
     }
+
     const encryptedPassword = await bcrypt.hash(password, 10);
     await User.create({
       fullname,
@@ -29,10 +30,14 @@ router.post("/signup", async (req, res) => {
       mobile,
       password: encryptedPassword,
     });
-    // await user.save();
+    const user = await User.findOne({ email });
+    const jwttoken = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
+      expiresIn: "24h",
+    });
     res.json({
       status: "SUCCESS",
       data: "you have signed up successfully",
+      jwttoken,
     });
   } catch (error) {
     // errorHandler(res, error);
@@ -43,42 +48,46 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-//Login
+// Login
 router.post("/login", async (req, res) => {
   try {
-    console.log(req.body);
     const { email, password } = req.body;
 
     if (!email || !password) {
       return res.status(404).json({ error: "Email and password required" });
     }
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ error: "Invalid email or password" });
-    }
 
-    const PasswordMatched = await bcrypt.compare(password, user.password);
-    if (PasswordMatched) {
-      const jwttoken = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
-        expiresIn: "24h",
-      });
-      res.json({
-        status: "SUCCESS",
-        message: "you have logged in successfully",
-        jwttoken,
-      });
+    const user = await User.findOne({ email });
+
+    if (user) {
+      const passwordMatched = await bcrypt.compare(password, user.password);
+
+      if (passwordMatched) {
+        const jwttoken = jwt.sign(user.toJSON(), process.env.JWT_SECRET, {
+          expiresIn: "24h",
+        });
+
+        return res.json({
+          status: "SUCCESS",
+          message: "You have logged in successfully",
+          jwttoken,
+        });
+      } else {
+        return res.json({
+          status: "FAILED",
+          message: "Incorrect email and password. Please try again",
+        });
+      }
     } else {
-      res.json({
+      return res.json({
         status: "FAILED",
-        message: "Incorrect email and password. Please try again",
+        message: "Invalid Credentials",
       });
     }
   } catch (error) {
-    console.log(error.message);
-    // errorHandler(res, error);
-    res.json({
+    return res.json({
       status: "FAILED",
-      message: "An error occured. Please try again later",
+      message: "An error occurred. Please try again later",
     });
   }
 });

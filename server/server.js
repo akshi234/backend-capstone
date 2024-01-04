@@ -9,14 +9,14 @@ const jobRoutes = require("./routes/job");
 const authorization = require("./middleware/authorization");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
-app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/api/auth", authRoutes);
-app.use("/api/job", jobRoutes);
+app.use("/", authRoutes);
+app.use("/", jobRoutes);
 app.get("/page", authorization, (req, res) => {
   res.json({
     status: "active",

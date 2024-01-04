@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const JobPost = require("../model/job");
+const mongoose = require("mongoose");
+const authenticateUser = require("../middleware/authentication");
 const authorization = require("../middleware/authorization");
 
 router.post("/JobPosts", authorization, async (req, res) => {
@@ -32,6 +34,7 @@ router.post("/JobPosts", authorization, async (req, res) => {
     ) {
       return res.status(404).json({ error: "All fields are required" });
     }
+
     await JobPost.create({
       companyName,
       logoURL,
@@ -48,32 +51,51 @@ router.post("/JobPosts", authorization, async (req, res) => {
     return res.json({
       message: "Job post created successfully",
     });
-  } catch (err) {
-    console.log(err.message);
-    return res.status(500).json({ err: "internal server error" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "internal server error" });
   }
 });
 
 //Edit Job Post API
-router.put("/JobPosts/:jobId", authorization, async (req, res, next) => {
-  const { postedBy, updates } = req.body;
-
+router.put("/:id", authorization, async (req, res, next) => {
   try {
-    const userId = new mongoose.Types.ObjectId(postedBy);
+    const { id } = req.params;
+    const {
+      companyName,
+      logoURL,
+      jobPosition,
+      salary,
+      jobType,
+      workType,
+      location,
+      description,
+      skills,
+      about,
+    } = req.body;
 
-    if (userId.equals(req.user._id)) {
-      const updatedJob = await Job.findByIdAndUpdate(req.body._id, updates, {
-        new: true,
-      });
+    const updatedJob = await JobPost.findByIdAndUpdate(
+      id,
+      {
+        companyName,
+        logoURL,
+        jobPosition,
+        salary,
+        jobType,
+        workType,
+        location,
+        description,
+        skills,
+        about,
+      },
+      { new: true }
+    );
 
-      if (!updatedJob) {
-        return res.status(404).json({ message: "Job not found" });
-      }
-
-      res.status(402).json({ message: "Job updated successfully", updatedJob });
-    } else {
-      res.status(400).json({ message: "Unauthorized" });
+    if (!updatedJob) {
+      return res.status(404).json({ message: "Job not found" });
     }
+
+    res.status(200).json({ message: "Job updated successfully", updatedJob });
   } catch (error) {
     next(error);
   }
@@ -82,17 +104,20 @@ router.put("/JobPosts/:jobId", authorization, async (req, res, next) => {
 //Get job with filters API
 router.post("/Filterjobs", async (req, res) => {
   try {
-    const { skills, title } = req.query;
+    const { skills, position } = req.body;
+    console.log("Received Data:", req.body);
 
     const query = {};
-    if (skills) {
-      query.skills = { $in: skills.split(",") };
+    if (skills && Array.isArray(skills) && skills.length > 0) {
+      query.skills = { $in: skills };
     }
-    if (title) {
-      query.position = { $regex: new RegExp(title, "i") };
+    if (position) {
+      query.position = { $regex: new RegExp(position, "i") };
     }
-
+    console.log("MongoDB Query:", query);
     const jobs = await JobPost.find(query);
+
+    console.log("Search result:", jobs);
 
     res.status(200).json({ data: jobs });
   } catch (error) {
@@ -102,20 +127,26 @@ router.post("/Filterjobs", async (req, res) => {
 });
 
 // Detail API
-router.get("/jobposts", async (req, res) => {
-  const jobID = req.params.id;
-
+router.get("/fetchPost/:id", authorization, async (req, res, next) => {
   try {
-    const jobPost = await jobPost.findById(jobID);
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.status(400);
+      return next(new Error("Invalid ID format"));
+    }
+
+    const jobPost = await JobPost.findById(id);
 
     if (!jobPost) {
       return res.status(404).json({ message: "Job post not found" });
     }
+    console.log(jobPost.skills);
 
     return res.json({ jobPost });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
