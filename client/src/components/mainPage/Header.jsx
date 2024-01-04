@@ -16,13 +16,6 @@ export default function Header() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      // try {
-      //   const decodedToken = jwt_decode(token);
-      //   console.log("Decoded Token Payload:", decodedToken);
-      //   setUserName(decodedToken.fullname);
-      // } catch (error) {
-      //   console.error("Error decoding token:", error);
-      // }
     }
   }, [isLoggedIn]);
 

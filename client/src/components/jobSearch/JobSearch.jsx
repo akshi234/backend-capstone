@@ -1,15 +1,16 @@
-import { useState } from "react";
-
+import { useContext, useEffect, useState } from "react";
 import styles from "./jobsearch.module.css";
 import search from "../../assets/search.png";
 import cross from "../../assets/cross.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { jobSearchContext } from "../../context/JobSearchProvider";
 
-export default function JobSearch() {
+export default function JobSearch(props) {
   const [jobTitle, setJobTitle] = useState("");
   const [selectedSkills, setSelectedSkills] = useState([]);
   const navigate = useNavigate();
+  const { setJobData } = useContext(jobSearchContext);
 
   const handleJobTitleChange = (e) => {
     setJobTitle(e.target.value);
@@ -29,32 +30,19 @@ export default function JobSearch() {
     setSelectedSkills(updatedSkills);
   };
 
-  const handleSearch = async () => {
-    try {
-      const selectedSkillsString =
-        '["AWS", "Docker", "Kubernetes", "Terraform", "CI/CD"]';
-      const searchData = {
-        position: jobTitle,
-        skills: selectedSkillsString,
-      };
-
-      console.log("Sending data to backend:", searchData);
-
-      const response = await axios.post(
-        "http://localhost:3001/Filterjobs",
-        searchData
-      );
-
-      console.log("Full server response:", response);
-      console.log("Search result:", response.data.data);
-    } catch (error) {
-      console.error("Error searching jobs:", error);
-    }
-  };
-
-  const handleKeyDown = (e) => {
+  const handleKeyDown = async (e) => {
     if (e.key === "Enter") {
-      handleSearch();
+      try {
+        console.log("Search Criteria:", { jobTitle, selectedSkills });
+        const response = await axios.post("http://localhost:3001/Filterjobs", {
+          jobTitle,
+          selectedSkills,
+        });
+        console.log("Search Response:", response.data);
+        setJobData(response.data);
+      } catch (error) {
+        console.error("Error searching jobs:", error);
+      }
     }
   };
 

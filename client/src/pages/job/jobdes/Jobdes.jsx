@@ -1,27 +1,43 @@
 import styles from "./jobdes.module.css";
-// import React from "react";
-import top from "../../assets/top.png";
-import bottom from "../../assets/bottom.png";
-import middle from "../../assets/middle.png";
-import calender from "../../assets/calender.png";
-import stippend from "../../assets/stippend (1).png";
-export default function Jobdes() {
+import top from "../../../assets/top.png";
+import bottom from "../../../assets/bottom.png";
+import middle from "../../../assets/middle.png";
+import calender from "../../../assets/calender.png";
+import stippend from "../../../assets/stippend (1).png";
+import { useState, useEffect } from "react";
+import Header from "../../../components/mainPage/Header";
+import axios from "axios";
+
+export default function Jobdes(props) {
+  const [data, setData] = useState();
+
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        "http://localhost:3001/fetchPost/" + id,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+        }
+      );
+      if (response.data !== undefined) {
+        setData(response.data);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
-      <div className={styles.navbar}>
-        <div>
-          <img src={top} className={styles.topImg} />
-          <img src={bottom} className={styles.bottomImg} />
-          <img src={middle} className={styles.middleImg} />
-        </div>
-        <div className={styles.header}>
-          <div className={styles.jobFinder}>Jobfinder</div>
-          <div className={styles.logReg}>
-            <div className={styles.login}>Login</div>
-            <div className={styles.register}>Register</div>
-          </div>
-        </div>
-      </div>
+      <Header />
+
       <div className={styles.jobdeshead}>
         WordPress Development work from home job/internship at Adyaka Infosec
         Private Limited

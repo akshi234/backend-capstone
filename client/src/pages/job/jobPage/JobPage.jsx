@@ -1,5 +1,5 @@
 import styles from "./jobPage.module.css";
-import color from "../../assets/color.png";
+import color from "../../../assets/color.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
