@@ -5,6 +5,9 @@ import group from "../../assets/Group 3.png";
 import money from "../../assets/money.png";
 import PropTypes from "prop-types";
 // import company from "../../assets/logo.png";
+const handleViewPage = () => {
+  navigate("/fetchPost/:jobId");
+};
 
 const JobList = ({ jobs }) => {
   return (
@@ -42,7 +45,9 @@ const JobList = ({ jobs }) => {
               <div className={styles.skill}>{job.skills}</div>
             </div>
             <div className={styles.handle}>
-              <div className={styles.viewdetails}>View Details</div>
+              <div className={styles.viewdetails} onClick={handleViewPage}>
+                View Details
+              </div>
             </div>
           </div>
         </div>
