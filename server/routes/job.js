@@ -130,23 +130,30 @@ router.post("/Filterjobs", async (req, res) => {
 router.get("/fetchPost/:id", authorization, async (req, res, next) => {
   try {
     const { id } = req.params;
+    console.log(id);
+    const _id = new mongoose.Types.ObjectId(id);
+    const jobPost = await JobPost.findById(_id);
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      res.status(400);
+    if (!jobPost) {
       return next(new Error("Invalid ID format"));
     }
 
-    const jobPost = await JobPost.findById(id);
+    res.status(200).send(jobPost);
 
-    if (!jobPost) {
-      return res.status(404).json({ message: "Job post not found" });
-    }
-    console.log(jobPost.skills);
-
-    return res.json({ jobPost });
+    return next(new Error("Invalid ID format"));
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ message: "Internal Server Error" });
+    next(err);
+  }
+});
+
+router.get("/fetchAllPost", async (req, res, next) => {
+  try {
+    const response = await JobPost.find({});
+
+    return res.send(response);
+  } catch (e) {
+    console.log(err.message);
   }
 });
 

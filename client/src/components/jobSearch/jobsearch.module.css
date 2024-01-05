@@ -85,7 +85,7 @@
     width: 8rem;
     height: 2rem;
     flex-shrink: 0;
-    border-radius: 8.069px;
+    border-radius: .2rem;
     background: #ed5353;
     color: #fff;
     font-family: Roboto;

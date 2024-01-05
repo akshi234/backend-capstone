@@ -7,10 +7,23 @@ import axios from "axios";
 import { jobSearchContext } from "../../context/JobSearchProvider";
 
 export default function JobSearch(props) {
+  const [selectedList, setSelectedList] = useState([]);
+  const [searchItem, setSearchedItem] = useState("");
   const [jobTitle, setJobTitle] = useState("");
   const [selectedSkills, setSelectedSkills] = useState([]);
   const navigate = useNavigate();
   const { setJobData } = useContext(jobSearchContext);
+
+  useEffect(() => {
+    setJobData(selectedList);
+  }, [selectedList]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      setSelectedList((prev) => [...prev, searchItem.trim()]);
+      setSearchedItem("");
+    }
+  };
 
   const handleJobTitleChange = (e) => {
     setJobTitle(e.target.value);
@@ -28,22 +41,6 @@ export default function JobSearch(props) {
       (skill) => skill !== removedSkill
     );
     setSelectedSkills(updatedSkills);
-  };
-
-  const handleKeyDown = async (e) => {
-    if (e.key === "Enter") {
-      try {
-        console.log("Search Criteria:", { jobTitle, selectedSkills });
-        const response = await axios.post("http://localhost:3001/Filterjobs", {
-          jobTitle,
-          selectedSkills,
-        });
-        console.log("Search Response:", response.data);
-        setJobData(response.data);
-      } catch (error) {
-        console.error("Error searching jobs:", error);
-      }
-    }
   };
 
   return (

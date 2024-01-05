@@ -11,11 +11,13 @@ import { useNavigate } from "react-router-dom";
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn());
   const navigate = useNavigate();
-  const [userName] = useState("");
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+    if (token && isLoggedIn) {
+      const userFullName = "fullName";
+      setUserName(userFullName);
     }
   }, [isLoggedIn]);
 
@@ -30,6 +32,7 @@ export default function Header() {
   const handleLogoutClick = () => {
     localStorage.removeItem("token");
     setIsLoggedIn(false);
+    setUserName("");
   };
 
   return (

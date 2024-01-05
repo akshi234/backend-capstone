@@ -18,7 +18,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/jobPage" element={<JobPage />} />
             <Route path="/header" element={<Alljob />} />
-            <Route path="/fetchPost/:jobId" element={<Jobdes />} />
+            <Route path="/fetchPost/:id" element={<Jobdes />} />
           </Routes>
         </BrowserRouter>
       </JobSearchProvider>

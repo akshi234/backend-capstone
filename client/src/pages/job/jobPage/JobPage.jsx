@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function JobPage() {
   const [companyName, setCompanyName] = useState("");
@@ -16,6 +17,11 @@ export default function JobPage() {
   const [description, setdescription] = useState("");
   const [about, setAbout] = useState("");
   const [skills, setSkills] = useState("");
+  const navigate = useNavigate();
+
+  const handleCancleBtn = () => {
+    navigate("/header");
+  };
 
   const AddJob = async (e) => {
     e.preventDefault();
@@ -186,7 +192,9 @@ export default function JobPage() {
           </div>
 
           <div className={styles.btns}>
-            <button className={styles.canbtn}>Cancel</button>
+            <button className={styles.canbtn} onClick={handleCancleBtn}>
+              Cancel
+            </button>
             <button className={styles.addbtn}>+Add Job</button>
           </div>
         </form>
