@@ -17,7 +17,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/jobPage" element={<JobPage />} />
-            <Route path="/header" element={<Alljob />} />
+            <Route path="/" element={<Alljob />} />
             <Route path="/fetchPost/:id" element={<Jobdes />} />
           </Routes>
         </BrowserRouter>

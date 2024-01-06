@@ -15,8 +15,19 @@ export default function Header() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token && isLoggedIn) {
-      const userFullName = "fullName";
-      setUserName(userFullName);
+      try {
+        const decodedToken = JSON.parse(atob(token.split(".")[1]));
+        console.log("Decoded token:", decodedToken);
+
+        const userFullName = decodedToken.fullname;
+        console.log("User full name:", userFullName);
+        setUserName(userFullName);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        setUserName("");
+      }
+    } else {
+      setUserName("");
     }
   }, [isLoggedIn]);
 

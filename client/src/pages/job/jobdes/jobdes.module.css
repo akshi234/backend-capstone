@@ -111,13 +111,14 @@
 
 .aboutskill{
     display: flex;
+    flex-direction: row;
     gap: 20px;
     color: #595959;
 }
 
 .skillcont{
     background-color: #FFEEEE;
-    width: 5rem;
+    width: 11rem;
     text-align: center;
     border-radius: .8rem;
 }

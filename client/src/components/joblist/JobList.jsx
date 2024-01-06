@@ -27,7 +27,7 @@ const JobList = () => {
           <div key={job.id} className={styles.jobleftright}>
             <div className={styles.jobleft}>
               <div className={styles.company}>
-                <img src={job.logoUR} alt="img" />
+                <img src={job.logoURL} alt="img" className={styles.logoo} />
               </div>
               <div className={styles.jobContent}>
                 <div className={styles.job}>{job.position}</div>

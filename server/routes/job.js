@@ -162,7 +162,7 @@ router.get("/fetchAllPost", async (req, res, next) => {
 
     return res.send(response);
   } catch (e) {
-    console.log(err.message);
+    // console.log(err.message);
   }
 });
 

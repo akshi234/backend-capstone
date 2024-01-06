@@ -80,9 +80,7 @@ export default function Jobdes(props) {
               <p className={styles.compcont}>{companyData.description}</p>
               <p className={styles.aboutcomp}>Skill(s) required</p>
               <div className={styles.aboutskill}>
-                <div className={styles.skillcont}>HTML</div>
-                <div className={styles.skillcont}>CSS</div>
-                <div className={styles.skillcont}>Wordpress</div>
+                <div className={styles.skillcont}>{companyData.skills}</div>
               </div>
               <p className={styles.aboutcomp}>Additional Information</p>
               <p className={styles.compcont}>

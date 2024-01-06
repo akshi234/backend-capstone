@@ -20,7 +20,7 @@ export default function JobPage() {
   const navigate = useNavigate();
 
   const handleCancleBtn = () => {
-    navigate("/header");
+    navigate("/");
   };
 
   const AddJob = async (e) => {

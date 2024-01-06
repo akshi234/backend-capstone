@@ -39,7 +39,7 @@ export default function Register() {
       if (response?.data.status) {
         console.log(response);
         toast.success("Signup Successfully");
-        navigate("/header");
+        navigate("/");
       } else {
         toast.error(response.data.status);
       }

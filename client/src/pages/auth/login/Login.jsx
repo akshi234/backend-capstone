@@ -29,7 +29,7 @@ export default function Login() {
       if (response?.data.status === "SUCCESS") {
         console.log(response);
         toast.success("Login Succesfully");
-        navigate("/header");
+        navigate("/");
       } else {
         toast.error("Incorrect email or password. Please try again.");
       }
