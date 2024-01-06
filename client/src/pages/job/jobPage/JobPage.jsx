@@ -31,7 +31,7 @@ export default function JobPage() {
       console.log("Token from localStorage:", token);
 
       const response = await axios.post(
-        "http://localhost:3001/JobPosts",
+        "https://capstone-vl68.onrender.com/JobPosts",
         {
           companyName,
           logoURL,

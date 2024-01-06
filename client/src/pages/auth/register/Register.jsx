@@ -25,12 +25,15 @@ export default function Register() {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:3001/signup", {
-        fullname,
-        email,
-        mobile,
-        password,
-      });
+      const response = await axios.post(
+        "https://capstone-vl68.onrender.com/signup",
+        {
+          fullname,
+          email,
+          mobile,
+          password,
+        }
+      );
 
       if (response?.data.jwttoken) {
         localStorage.setItem("token", response.data.jwttoken);

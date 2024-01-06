@@ -3,7 +3,7 @@ import styles from "./jobsearch.module.css";
 import search from "../../assets/search.png";
 import cross from "../../assets/cross.png";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+
 import { jobSearchContext } from "../../context/JobSearchProvider";
 
 export default function JobSearch({

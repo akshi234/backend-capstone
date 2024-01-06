@@ -21,7 +21,7 @@ export default function Jobdes(props) {
         console.log(id);
         if (id) {
           const response = await axios.get(
-            `http://localhost:3001/fetchPost/${id}`,
+            `https://capstone-vl68.onrender.com/fetchPost/${id}`,
             {
               headers: {
                 "Content-Type": "application/json",

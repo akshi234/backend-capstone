@@ -17,10 +17,13 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3001/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "https://capstone-vl68.onrender.com/login",
+        {
+          email,
+          password,
+        }
+      );
 
       if (response?.data.jwttoken) {
         localStorage.setItem("token", response.data.jwttoken);

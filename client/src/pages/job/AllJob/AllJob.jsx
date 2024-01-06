@@ -14,10 +14,13 @@ export default function Alljob(props) {
   const filteredPosts = async () => {
     try {
       // console.log("this is job data : ", jobData);
-      const response = await axios.post("http://localhost:3001/Filterjobs", {
-        skills: selectedSkills,
-        position: jobTitle,
-      });
+      const response = await axios.post(
+        "https://capstone-vl68.onrender.com/Filterjobs",
+        {
+          skills: selectedSkills,
+          position: jobTitle,
+        }
+      );
       console.log(selectedSkills);
       console.log("this is from all job filter.", response);
       setJobData(response.data.data);
@@ -39,7 +42,9 @@ export default function Alljob(props) {
 
   const fetchPosts = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/fetchAllPost");
+      const response = await axios.get(
+        "https://capstone-vl68.onrender.com/fetchAllPost"
+      );
       // console.log("API Response:", response.data);
       setJobData(response.data);
       // console.log(jobs);
