@@ -7,23 +7,30 @@ import { jobSearchContext } from "../../../context/JobSearchProvider";
 
 export default function Alljob(props) {
   const [jobs, setJobs] = useState([]);
-  const { jobData } = useContext(jobSearchContext);
+  const { jobData, setJobData } = useContext(jobSearchContext);
+  const [jobTitle, setJobTitle] = useState("");
+  const [selectedSkills, setSelectedSkills] = useState([]);
 
-  // const filteredPosts = async () => {
-  //   try {
-  //     const response = await axios.post("http://localhost:3001/Filterjobs", {
-  //       skills: jobData,
-  //       position: jobData,
-  //     });
-  //     console.log("this is from all job iflter.", response);
-  //     setJobs(response.data.data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  const filteredPosts = async () => {
+    try {
+      // console.log("this is job data : ", jobData);
+      const response = await axios.post("http://localhost:3001/Filterjobs", {
+        skills: selectedSkills,
+        position: jobTitle,
+      });
+      console.log(selectedSkills);
+      console.log("this is from all job filter.", response);
+      setJobData(response.data.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    filteredPosts();
+  }, [selectedSkills, jobTitle]);
 
   // useEffect(() => {
-  //   if (jobData?.length === 0) {
+  //   if (jobData) {
   //     filteredPosts();
   //     return;
   //   }
@@ -34,7 +41,7 @@ export default function Alljob(props) {
     try {
       const response = await axios.get("http://localhost:3001/fetchAllPost");
       // console.log("API Response:", response.data);
-      setJobs(response.data);
+      setJobData(response.data);
       // console.log(jobs);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -48,8 +55,13 @@ export default function Alljob(props) {
   return (
     <div>
       <Header />
-      <JobSearch />
-      {jobs.length !== 0 && <JobList jobs={jobs} />}
+      <JobSearch
+        jobTitle={jobTitle}
+        setJobTitle={setJobTitle}
+        selectedSkills={selectedSkills}
+        setSelectedSkills={setSelectedSkills}
+      />
+      {jobData && <JobList />}
     </div>
   );
 }

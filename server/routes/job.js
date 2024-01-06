@@ -108,14 +108,23 @@ router.post("/Filterjobs", async (req, res) => {
     console.log("Received Data:", req.body);
 
     const query = {};
+    // property1: { $in: skillsToSearch },
+    // { property2: value2 },
     if (skills && Array.isArray(skills) && skills.length > 0) {
       query.skills = { $in: skills };
     }
     if (position) {
-      query.position = { $regex: new RegExp(position, "i") };
+      query.position = { position };
     }
+
     console.log("MongoDB Query:", query);
-    const jobs = await JobPost.find(query);
+    const jobs = await JobPost.find({
+      $or: [
+        { skills: { $in: skills } },
+        { position: position },
+        // add more conditions as needed
+      ],
+    });
 
     console.log("Search result:", jobs);
 

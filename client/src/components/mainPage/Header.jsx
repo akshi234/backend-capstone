@@ -6,7 +6,6 @@ import middle from "../../assets/middle.png";
 import user from "../../assets/user.png";
 import { isUserLoggedIn } from "../utils/util";
 import { useNavigate } from "react-router-dom";
-// import * as jwt_decode from "jwt-decode";
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(isUserLoggedIn());

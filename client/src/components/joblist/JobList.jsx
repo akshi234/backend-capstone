@@ -5,11 +5,14 @@ import group from "../../assets/Group 3.png";
 import money from "../../assets/money.png";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { jobSearchContext } from "../../context/JobSearchProvider";
 // import company from "../../assets/logo.png";
 
-const JobList = (props) => {
-  console.log("this is from jobList", props);
-  const { jobs } = props;
+const JobList = () => {
+  // console.log("this is from jobList", props);
+  // const { jobs } = props;
+  const { jobData: jobs } = useContext(jobSearchContext);
   const navigate = useNavigate();
 
   const handleViewPage = (id) => {

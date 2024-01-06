@@ -6,11 +6,14 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { jobSearchContext } from "../../context/JobSearchProvider";
 
-export default function JobSearch(props) {
+export default function JobSearch({
+  jobTitle,
+  setJobTitle,
+  selectedSkills,
+  setSelectedSkills,
+}) {
   const [selectedList, setSelectedList] = useState([]);
   const [searchItem, setSearchedItem] = useState("");
-  const [jobTitle, setJobTitle] = useState("");
-  const [selectedSkills, setSelectedSkills] = useState([]);
   const navigate = useNavigate();
   const { setJobData } = useContext(jobSearchContext);
 
@@ -20,13 +23,13 @@ export default function JobSearch(props) {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      setSelectedList((prev) => [...prev, searchItem.trim()]);
-      setSearchedItem("");
+      console.log(jobTitle, selectedSkills);
     }
   };
 
   const handleJobTitleChange = (e) => {
     setJobTitle(e.target.value);
+    console.log(jobTitle);
   };
 
   const handleSkillChange = (e) => {
